@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: white;
             height: 100vh;
@@ -25,20 +25,55 @@
             position: relative;
         }
 
-        body::before {
-            content: "";
-            position: absolute;
+        /* MENU SUPERIOR ESTILIZADO */
+        .top-bar {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
-            z-index: -1;
+            padding: 1rem 2rem;
+            background: rgba(20, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: #ffdd59;
+            text-shadow: 0 0 8px rgba(255, 221, 89, 0.7);
+        }
+
+        .date-display {
+            font-size: 1rem;
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        .weekday {
+            font-weight: 600;
+            color: #ffdd59;
+        }
+
+        .full-date {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+        main {
+            margin-top: 80px; /* Para não ficar escondido pelo menu */
         }
 
         h1 {
             font-size: 3.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             animation: fadeInDown 1s ease-in-out;
         }
@@ -60,6 +95,10 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.18);
             transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .time-segment:hover {
@@ -113,6 +152,15 @@
         }
 
         @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+                text-align: center;
+            }
+            .date-display {
+                text-align: center;
+            }
             h1 {
                 font-size: 2.5rem;
             }
@@ -166,30 +214,46 @@
     </style>
 </head>
 <body>
-    <div class="stars" id="stars"></div>
-
-    <h1>⏳ Contagem Regressiva para 2026</h1>
-
-    <div class="container">
-        <div class="time-segment">
-            <div class="number" id="days">000</div>
-            <div class="label">Dias</div>
-        </div>
-        <div class="time-segment">
-            <div class="number" id="hours">00</div>
-            <div class="label">Horas</div>
-        </div>
-        <div class="time-segment">
-            <div class="number" id="minutes">00</div>
-            <div class="label">Minutos</div>
-        </div>
-        <div class="time-segment">
-            <div class="number" id="seconds">00</div>
-            <div class="label">Segundos</div>
+    <!-- MENU SUPERIOR -->
+    <div class="top-bar">
+        <div class="logo">⏳ Countdown 2026</div>
+        <div class="date-display">
+            <div class="weekday" id="weekday">Carregando...</div>
+            <div class="full-date" id="full-date">—</div>
         </div>
     </div>
 
-    <p class="message">Prepare-se para um novo ano cheio de possibilidades! 🎆✨</p>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main>
+        <h1>Contagem Regressiva para 2026</h1>
+
+        <div class="container">
+            <div class="time-segment">
+                <div class="number" id="weeks">000</div>
+                <div class="label">Semanas</div>
+            </div>
+            <div class="time-segment">
+                <div class="number" id="days">000</div>
+                <div class="label">Dias</div>
+            </div>
+            <div class="time-segment">
+                <div class="number" id="hours">00</div>
+                <div class="label">Horas</div>
+            </div>
+            <div class="time-segment">
+                <div class="number" id="minutes">00</div>
+                <div class="label">Minutos</div>
+            </div>
+            <div class="time-segment">
+                <div class="number" id="seconds">00</div>
+                <div class="label">Segundos</div>
+            </div>
+        </div>
+
+        <p class="message">Prepare-se para um novo ano cheio de possibilidades! 🎆✨</p>
+    </main>
+
+    <div class="stars" id="stars"></div>
 
     <script>
         // Gera estrelas no fundo
@@ -208,11 +272,33 @@
         // Define a data alvo: 1º de janeiro de 2026, 00:00:00
         const targetDate = new Date("January 1, 2026 00:00:00").getTime();
 
+        // Função para formatar data em português do Brasil
+        function updateCurrentDate() {
+            const now = new Date();
+            const optionsWeekday = { weekday: 'long', timeZone: 'America/Sao_Paulo' };
+            const optionsFullDate = { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric',
+                timeZone: 'America/Sao_Paulo'
+            };
+
+            // Formata o dia da semana e data
+            const weekday = now.toLocaleDateString('pt-BR', optionsWeekday).replace(/^\w/, c => c.toUpperCase());
+            const fullDate = now.toLocaleDateString('pt-BR', optionsFullDate).replace(/^\w/, c => c.toUpperCase());
+
+            // Atualiza no DOM
+            document.getElementById('weekday').textContent = weekday;
+            document.getElementById('full-date').textContent = fullDate;
+        }
+
+        // Função contagem regressiva
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
 
             if (distance < 0) {
+                document.getElementById("weeks").innerText = "000";
                 document.getElementById("days").innerText = "000";
                 document.getElementById("hours").innerText = "00";
                 document.getElementById("minutes").innerText = "00";
@@ -223,10 +309,12 @@
             }
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const weeks = Math.floor(days / 7);
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+            document.getElementById("weeks").innerText = weeks.toString().padStart(3, '0');
             document.getElementById("days").innerText = days.toString().padStart(3, '0');
             document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
             document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
@@ -234,10 +322,14 @@
         }
 
         // Atualiza a cada 1 segundo
-        setInterval(updateCountdown, 1000);
+        setInterval(() => {
+            updateCountdown();
+            updateCurrentDate(); // Garante que a data também atualize ao vivo!
+        }, 1000);
 
         // Executa ao carregar
         updateCountdown();
+        updateCurrentDate();
     </script>
 </body>
 </html>
