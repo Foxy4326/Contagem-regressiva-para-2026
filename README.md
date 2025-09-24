@@ -141,34 +141,68 @@
             color: #e0e0e0;
         }
 
-        /* BOTÃO DO CANAL */
-        .bible-btn {
-            margin-top: 2rem;
-            padding: 1.2rem 2.5rem;
-            background: linear-gradient(135deg, #8B0000, #4B0000);
+        /* BLOCO DE SEMANAS NO ESTILO DA IMAGEM */
+        .time-segment-weeks {
+            background: #0d1b2a;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            padding: 1.2rem;
+            min-width: 110px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .time-segment-weeks:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .number-weeks {
+            font-size: 2.8rem;
+            font-weight: bold;
             color: #FFD700;
-            font-size: 1.3rem;
-            font-weight: 700;
-            border: 2px solid #FFD700;
-            border-radius: 50px;
-            cursor: pointer;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+
+        .label-weeks {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.3rem;
+            color: #ccc;
+        }
+
+        /* BOTÃO DO CANAL (ESTILO DA IMAGEM) */
+        .connect-button {
             display: inline-flex;
             align-items: center;
-            gap: 1rem;
-            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.5);
-            transition: all 0.3s ease;
+            gap: 0.8rem;
+            background: #8B0000;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 50px;
             text-decoration: none;
-            animation: pulse 2s infinite;
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            transition: all 0.3s ease;
+            margin-top: 2rem;
         }
 
-        .bible-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
-            background: linear-gradient(135deg, #a52a2a, #6b0f0f);
+        .connect-button:hover {
+            background: #a52a2a;
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
         }
 
-        .bible-btn i {
-            font-size: 1.6rem;
+        .connect-button i {
+            font-size: 1.4rem;
+            color: #FFD700;
         }
 
         /* BOTÃO 2026 */
@@ -254,7 +288,43 @@
             to { box-shadow: 0 5px 25px rgba(186, 85, 255, 0.8); }
         }
 
-        /* MODAL DE LANÇAMENTO */
+        /* BOTÃO LER A BÍBLIA */
+        .bible-read-btn {
+            margin-top: 1.5rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #c9a04b, #a67c00);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 5px 20px rgba(199, 160, 75, 0.4);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            animation: shine 3s infinite alternate;
+        }
+
+        .bible-read-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+            background: linear-gradient(135deg, #d4b060, #c9a04b);
+        }
+
+        .bible-read-btn i {
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        @keyframes shine {
+            from { box-shadow: 0 5px 20px rgba(199, 160, 75, 0.4); }
+            to { box-shadow: 0 5px 25px rgba(255, 215, 0, 0.7); }
+        }
+
+        /* MODAL DE LANÇAMENTO COM IMAGEM */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -307,25 +377,6 @@
             color: #e0e0e0;
         }
 
-        /* CONTAINER DO VÍDEO */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* Proporção 16:9 */
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
         .close-modal {
             background: #8B0000;
             color: white;
@@ -340,6 +391,95 @@
 
         .close-modal:hover {
             background: #a52a2a;
+        }
+
+        /* CHAT COM IA */
+        .chat-section {
+            margin-top: 3rem;
+            background: rgba(20, 30, 50, 0.7);
+            padding: 1.5rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .chat-section h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        #aiChatBox {
+            height: 250px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        #aiChatBox div {
+            margin-bottom: 0.8rem;
+            padding: 0.6rem;
+            border-radius: 10px;
+            max-width: 85%;
+        }
+
+        #aiChatBox div[sender="user"] {
+            background: rgba(255,255,255,0.08);
+            margin-left: auto;
+            text-align: right;
+        }
+
+        #aiChatBox div[sender="ai"] {
+            background: rgba(75, 0, 130, 0.3);
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #aiChatInput {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        #aiChatInput::placeholder {
+            color: #aaa;
+        }
+
+        .send-btn {
+            background: #4B0082;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(75, 0, 130, 0.4);
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(75, 0, 130, 0.6);
+        }
+
+        .chat-footer {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 0.5rem;
         }
 
         @keyframes pulse {
@@ -373,13 +513,18 @@
                 font-size: 1.1rem;
                 padding: 0 1rem;
             }
-            .bible-btn, .coming-soon-btn, .video-soon-btn {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-                gap: 0.8rem;
+            .container {
+                gap: 1rem;
             }
-            .bible-btn i, .coming-soon-btn i, .video-soon-btn i {
-                font-size: 1.4rem;
+            .time-segment, .time-segment-weeks {
+                min-width: 90px;
+                padding: 1rem;
+            }
+            .number {
+                font-size: 2.5rem;
+            }
+            .number-weeks {
+                font-size: 2.2rem;
             }
         }
 
@@ -387,28 +532,35 @@
             .container {
                 gap: 0.5rem;
             }
-            .time-segment {
+            .time-segment, .time-segment-weeks {
                 min-width: 80px;
                 padding: 0.8rem;
             }
             .number {
                 font-size: 2rem;
             }
-            .label {
-                font-size: 0.9rem;
+            .number-weeks {
+                font-size: 1.8rem;
             }
-            .bible-btn, .coming-soon-btn, .video-soon-btn {
+            .label, .label-weeks {
+                font-size: 0.85rem;
+            }
+            .connect-button, .coming-soon-btn, .video-soon-btn, .bible-read-btn {
                 padding: 0.8rem 1.5rem;
                 font-size: 1rem;
                 flex-direction: column;
                 gap: 0.5rem;
             }
-            .bible-btn i, .coming-soon-btn i, .video-soon-btn i {
-                font-size: 1.5rem;
-            }
             .modal {
                 padding: 1.5rem;
                 margin: 1rem;
+            }
+            .chat-section {
+                margin-top: 2rem;
+                padding: 1rem;
+            }
+            #aiChatBox {
+                height: 200px;
             }
         }
 
@@ -465,9 +617,10 @@
         <p class="subtitle">Prepare seu coração. Um novo tempo está chegando. Que a Palavra de Deus te guie até lá.</p>
 
         <div class="container">
-            <div class="time-segment">
-                <div class="number" id="weeks">000</div>
-                <div class="label">Semanas</div>
+            <!-- BLOCO DE SEMANAS NOVO -->
+            <div class="time-segment-weeks">
+                <div class="number-weeks" id="weeks-display">000</div>
+                <div class="label-weeks">Semanas</div>
             </div>
             <div class="time-segment">
                 <div class="number" id="days">000</div>
@@ -487,10 +640,10 @@
             </div>
         </div>
 
-        <!-- BOTÃO DO CANAL -->
-        <a href="https://youtube.com/@bibliasagrada-r3c4o?si=6siww098EMGjsXL6" target="_blank" class="bible-btn">
+        <!-- BOTÃO "CONECTE-SE À PALAVRA" -->
+        <a href="https://youtube.com/@bibliasagrada-r3c4o?si=6siww098EMGjsXL6" target="_blank" class="connect-button">
             <i class="fab fa-youtube"></i>
-            <span>Conecte-se à Palavra: Visite nosso Canal</span>
+            Conecte-se à Palavra: Visite nosso Canal
         </a>
 
         <!-- BOTÃO 2026 -->
@@ -504,133 +657,35 @@
             <i class="fas fa-video"></i>
             <span>Vídeo Lançado em Breve! 🎬</span>
         </a>
+
+        <!-- BOTÃO LER A BÍBLIA -->
+        <a href="https://www.bibliaonline.com.br/" target="_blank" class="bible-read-btn">
+            <i class="fas fa-book-open"></i>
+            <span>Ler a Bíblia Online 📖</span>
+        </a>
+
+        <!-- CHAT COM IA -->
+        <div class="chat-section">
+            <h3>💬 Fale com a IA da Palavra</h3>
+            <div id="aiChatBox"></div>
+            <div class="chat-input-area">
+                <input type="text" id="aiChatInput" placeholder="Escreva sua mensagem, dúvida ou oração...">
+                <button onclick="sendAiMessage()" class="send-btn">Enviar</button>
+            </div>
+            <p class="chat-footer">
+                Uma IA espiritual responde com mensagens baseadas na Palavra de Deus. 🙏
+            </p>
+        </div>
     </main>
 
-    <!-- MODAL DE LANÇAMENTO COM VÍDEO -->
+    <!-- MODAL DE LANÇAMENTO COM IMAGEM -->
     <div class="modal-overlay" id="videoModal">
         <div class="modal">
             <h2><i class="fas fa-bell"></i> Novo Vídeo em Breve!</h2>
             <p>Um novo vídeo está sendo preparado com muito carinho para abençoar sua vida. 🙏</p>
 
-            <!-- VÍDEO DO YOUTUBE EMBUTIDO -->
-            <div class="video-container">
-                <iframe 
-                    src="https://www.youtube.com/embed/ryt0Ze7o0eE?si=u73GF-s3QqxxIWnE&autoplay=1&mute=1" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-            </div>
-
-            <p>👉 <strong>Inscreva-se</strong> e <strong>ative o sininho</strong> para não perder!</p>
-            <button class="close-modal" onclick="closeModal()">Fechar</button>
-        </div>
-    </div>
-
-    <!-- CRUZ DECORATIVA -->
-    <div class="cross">
-        ✝
-    </div>
-
-    <div class="stars" id="stars"></div>
-
-    <script>
-        // Gera estrelas no fundo
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 120; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.width = Math.random() * 3 + 'px';
-            star.style.height = star.style.width;
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            starsContainer.appendChild(star);
-        }
-
-        // Data alvo: 1º de janeiro de 2026
-        const targetDate = new Date("January 1, 2026 00:00:00").getTime();
-
-        // Atualiza data e dia da semana
-        function updateCurrentDate() {
-            const now = new Date();
-            const optionsWeekday = { weekday: 'long', timeZone: 'America/Sao_Paulo' };
-            const optionsFullDate = { 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric',
-                timeZone: 'America/Sao_Paulo'
-            };
-
-            const weekday = now.toLocaleDateString('pt-BR', optionsWeekday)
-                .replace(/^\w/, c => c.toUpperCase());
-            const fullDate = now.toLocaleDateString('pt-BR', optionsFullDate)
-                .replace(/^\w/, c => c.toUpperCase());
-
-            document.getElementById('weekday').textContent = weekday;
-            document.getElementById('full-date').textContent = fullDate;
-        }
-
-        // Atualiza contagem regressiva
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            if (distance < 0) {
-                document.getElementById("weeks").innerText = "000";
-                document.getElementById("days").innerText = "000";
-                document.getElementById("hours").innerText = "00";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
-                document.querySelector("h1").innerText = "🎉 2026 CHEGOU! 🎉";
-                document.querySelector(".subtitle").innerText = "Que este novo ano seja abençoado pela luz da Palavra!";
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const weeks = Math.floor(days / 7);
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("weeks").innerText = weeks.toString().padStart(3, '0');
-            document.getElementById("days").innerText = days.toString().padStart(3, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
-        }
-
-        // Função para rolar suavemente até o topo
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Funções do Modal
-        function openModal() {
-            document.getElementById('videoModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('videoModal').classList.remove('active');
-        }
-
-        // Fecha modal se clicar fora
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        setInterval(() => {
-            updateCountdown();
-            updateCurrentDate();
-        }, 1000);
-
-        updateCountdown();
-        updateCurrentDate();
-    </script>
-</body>
-</html>
+            <div style="background: #1a1a2e; padding: 1rem; border-radius: 15px; border: 2px solid #FFD700; margin-bottom: 1.5rem;">
+                <img 
+                    src="https://via.placeholder.com/400x225/1a1a2e/FFFFFF?text=DEUS+CUMPRE+SUAS+PROMESSAS" 
+                    alt="Novo Vídeo em Breve" 
+                    style="width: 100%; max-width: 380px; border-radius: 10px; box-shadow: 0 5px 15
