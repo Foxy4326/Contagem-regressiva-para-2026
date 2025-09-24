@@ -13,7 +13,7 @@
     }
 
     body {
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+      background: linear-gradient(135deg, #1a2a6c, #2c3e50, #1a2a6c);
       color: white;
       min-height: 100vh;
       display: flex;
@@ -25,7 +25,7 @@
 
     .container {
       max-width: 600px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       padding: 40px;
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -34,13 +34,29 @@
     h1 {
       font-size: 2.5rem;
       margin-bottom: 20px;
-      color: #ffcc00;
+      color: #4fc3f7;
     }
 
     p.subtitle {
       font-size: 1.2rem;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       line-height: 1.6;
+    }
+
+    .countdown {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 25px 0;
+      color: #66ffcc;
+    }
+
+    .countdown span {
+      display: inline-block;
+      min-width: 60px;
+      padding: 8px 0;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      margin: 0 5px;
     }
 
     .menu {
@@ -53,18 +69,18 @@
     }
 
     .menu a {
-      color: #4fc3f7;
+      color: #66ffcc;
       text-decoration: none;
       font-size: 1.1rem;
       display: inline-block;
       padding: 10px 20px;
-      border: 1px solid #4fc3f7;
+      border: 1px solid #66ffcc;
       border-radius: 8px;
       transition: all 0.3s ease;
     }
 
     .menu a:hover {
-      background-color: #4fc3f7;
+      background-color: #66ffcc;
       color: #000;
       transform: translateY(-2px);
     }
@@ -84,6 +100,15 @@
         font-size: 2rem;
       }
 
+      .countdown {
+        font-size: 1.4rem;
+      }
+
+      .countdown span {
+        min-width: 45px;
+        font-size: 1rem;
+      }
+
       .menu a {
         font-size: 1rem;
         padding: 8px 16px;
@@ -96,6 +121,12 @@
     <h1>🛠️ Site em Manutenção</h1>
     <p class="subtitle">Estamos realizando melhorias para oferecer uma experiência ainda melhor!</p>
 
+    <div class="countdown" id="countdown">
+      <span id="hours">--</span>:
+      <span id="minutes">--</span>:
+      <span id="seconds">--</span>
+    </div>
+
     <ul class="menu">
       <li><a href="#">&#127968; Página Inicial</a></li>
       <li><a href="mailto:contato@seudominio.com.br">&#128231; Contato</a></li>
@@ -104,9 +135,68 @@
     </ul>
 
     <div class="footer">
-      <p><strong>Previsão de retorno:</strong> Em breve!</p>
+      <p><strong>Previsão de retorno:</strong> <span id="return-date-time">14:30</span> (Horário de Brasília)</p>
       <p>Agradecemos sua paciência. 😊</p>
     </div>
   </div>
+
+  <script>
+    // Função para obter data/hora atual no fuso de Brasília
+    function nowBrasilia() {
+      return new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+    }
+
+    // Obter data de hoje em Brasília
+    const now = nowBrasilia();
+    const today = new Date(now);
+    today.setHours(14, 30, 0, 0); // 14:30:00 (2:30 da tarde)
+
+    // Se já passou das 14:30 hoje, define para amanhã
+    let target = today;
+    if (now > today) {
+      target.setDate(today.getDate() + 1); // amanhã às 14:30
+    }
+
+    const targetTime = target.getTime();
+
+    // Formatar data de retorno para exibição amigável
+    const options = { 
+      weekday: 'long', 
+      day: 'numeric', 
+      month: 'long', 
+      hour: '2-digit', 
+      minute: '2-digit',
+      timeZone: 'America/Sao_Paulo'
+    };
+    document.getElementById('return-date-time').textContent = 
+      target.toLocaleString('pt-BR', options).replace('às', 'às');
+
+    // Elementos do contador
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    function updateCountdown() {
+      const nowMs = nowBrasilia().getTime();
+      const diff = targetTime - nowMs;
+
+      if (diff <= 0) {
+        document.querySelector('.countdown').innerHTML = '<span style="color:#4caf50;">Manutenção concluída! Atualize a página.</span>';
+        clearInterval(timer);
+        return;
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      hoursEl.textContent = String(hours).padStart(2, '0');
+      minutesEl.textContent = String(minutes).padStart(2, '0');
+      secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
