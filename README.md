@@ -1,169 +1,618 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Site em Manutenção</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    body {
-      background: linear-gradient(135deg, #1a2a6c, #2c3e50, #1a2a6c);
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 600px;
-      background: rgba(0, 0, 0, 0.75);
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #4fc3f7;
-    }
-    p.subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 25px;
-      line-height: 1.6;
-    }
-    .countdown {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin: 25px 0;
-      color: #66ffcc;
-    }
-    .countdown span {
-      display: inline-block;
-      min-width: 60px;
-      padding: 8px 0;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 8px;
-      margin: 0 5px;
-    }
-    .menu {
-      list-style: none;
-      margin: 30px 0;
-    }
-    .menu li {
-      margin: 15px 0;
-    }
-    .menu a {
-      color: #66ffcc;
-      text-decoration: none;
-      font-size: 1.1rem;
-      display: inline-block;
-      padding: 10px 20px;
-      border: 1px solid #66ffcc;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-    .menu a:hover {
-      background-color: #66ffcc;
-      color: #000;
-      transform: translateY(-2px);
-    }
-    .footer {
-      margin-top: 30px;
-      font-size: 0.95rem;
-      color: #bbb;
-    }
-    @media (max-width: 600px) {
-      .container { padding: 25px; }
-      h1 { font-size: 2rem; }
-      .countdown { font-size: 1.4rem; }
-      .countdown span { min-width: 45px; font-size: 1rem; }
-      .menu a { font-size: 1rem; padding: 8px 16px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva para 2026 | Bíblia Sagrada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b, #2c3e50);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* MENU SUPERIOR */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(13, 27, 42, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.3rem;
+        }
+
+        .date-display {
+            font-size: 1rem;
+            text-align: right;
+            line-height: 1.4;
+        }
+
+        .weekday {
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .full-date {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+        main {
+            margin-top: 80px;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: fadeInDown 1s ease-in-out;
+            color: #FFD700;
+            font-weight: 800;
+        }
+
+        .highlight-year {
+            font-size: 2.8rem;
+            color: #ffdd59;
+            text-shadow: 0 0 15px rgba(255, 221, 89, 0.8);
+            margin: 0.5rem 0;
+            font-weight: 900;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .time-segment {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            min-width: 120px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .time-segment:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffdd59;
+            text-shadow: 0 0 15px rgba(255, 221, 89, 0.7);
+        }
+
+        .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+            color: #e0e0e0;
+        }
+
+        /* BOTÃO DO CANAL */
+        .bible-btn {
+            margin-top: 2rem;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, #8B0000, #4B0000);
+            color: #FFD700;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: 2px solid #FFD700;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        .bible-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            background: linear-gradient(135deg, #a52a2a, #6b0f0f);
+        }
+
+        .bible-btn i {
+            font-size: 1.6rem;
+        }
+
+        /* TEXTO/BOTÃO "EM BREVE LANÇARÁ EM 2026" */
+        .launch-info {
+            margin-top: 1.5rem;
+            padding: 1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFD700;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 50px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Botões de Autenticação */
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .auth-btn {
+            padding: 0.9rem 1.8rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            color: white;
+            min-width: 160px;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #1e3a8a, #0c1b44);
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.6);
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #065f46, #022c22);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.5);
+        }
+
+        .registered-btn {
+            background: linear-gradient(135deg, #7c2d12, #431407);
+        }
+
+        .registered-btn:hover {
+            background: linear-gradient(135deg, #ea580c, #c2410d);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(234, 88, 12, 0.5);
+        }
+
+        .auth-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* BOTÃO VÍDEO EM BREVE */
+        .video-soon-btn {
+            margin-top: 1.5rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #6a0dad, #3b006b);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 5px 20px rgba(106, 13, 173, 0.4);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            animation: glow 2s infinite alternate;
+        }
+
+        .video-soon-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(155, 50, 255, 0.6);
+            background: linear-gradient(135deg, #8b28d9, #5a00b3);
+        }
+
+        .video-soon-btn i {
+            font-size: 1.3rem;
+            color: #FFD700;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 5px 20px rgba(106, 13, 173, 0.4); }
+            to { box-shadow: 0 5px 25px rgba(186, 85, 255, 0.8); }
+        }
+
+        /* SEÇÃO DE CHAT */
+        .chat-section {
+            margin-top: 3rem;
+            background: rgba(20, 30, 50, 0.7);
+            padding: 1.5rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .chat-section h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        #chatBox {
+            height: 200px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        #chatBox div {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #chatInput {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 50px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        #chatInput::placeholder {
+            color: #aaa;
+        }
+
+        .send-btn {
+            background: #FFD700;
+            color: #1a1a2e;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .chat-footer {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 5px 20px rgba(139, 0, 0, 0.5); }
+            50% { box-shadow: 0 5px 20px rgba(255, 215, 0, 0.6); }
+            100% { box-shadow: 0 5px 20px rgba(139, 0, 0, 0.5); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .date-display {
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            .highlight-year {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .container {
+                gap: 1rem;
+            }
+
+            .time-segment {
+                min-width: 100px;
+                padding: 1rem;
+            }
+
+            .number {
+                font-size: 2.5rem;
+            }
+
+            .bible-btn, .video-soon-btn, .launch-info {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+
+            .auth-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .chat-section {
+                margin-top: 2rem;
+                padding: 1rem;
+            }
+
+            #chatBox {
+                height: 150px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🛠️ Site em Manutenção</h1>
-    <p class="subtitle">Estamos realizando melhorias para oferecer uma experiência ainda melhor!</p>
 
-    <div class="countdown" id="countdown">
-      <span id="hours">--</span>:
-      <span id="minutes">--</span>:
-      <span id="seconds">--</span>
+    <!-- Menu Superior -->
+    <div class="top-bar">
+        <div class="logo">
+            <i class="fas fa-bible"></i> Bíblia Sagrada
+        </div>
+        <div class="date-display">
+            <div class="weekday" id="currentWeekday">Carregando...</div>
+            <div class="full-date" id="currentDate">Carregando...</div>
+        </div>
     </div>
 
-    <ul class="menu">
-      <li><a href="#">&#127968; Página Inicial</a></li>
-      <li><a href="mailto:contato@seudominio.com.br">&#128231; Contato</a></li>
-      <li><a href="https://status.seudominio.com.br" target="_blank">&#128201; Status da Manutenção</a></li>
-      <li><a href="https://seudominio.com.br">&#8617; Voltar ao Site</a></li>
-    </ul>
+    <!-- Conteúdo Principal -->
+    <main>
+        <h1>CONTAGEM REGRESSIVA</h1>
+        <div class="highlight-year">2026</div>
+        <p class="subtitle">Aguardando o grande momento em 2026. Cada segundo conta para a transformação espiritual.</p>
 
-    <div class="footer">
-      <p><strong>Previsão de retorno:</strong> <span id="return-date-time">14:30</span> (Horário de Brasília)</p>
-      <p>Agradecemos sua paciência. 😊</p>
+        <div class="container">
+            <div class="time-segment">
+                <div class="number" id="days">00</div>
+                <div class="label">Dias</div>
+            </div>
+            <div class="time-segment">
+                <div class="number" id="hours">00</div>
+                <div class="label">Horas</div>
+            </div>
+            <div class="time-segment">
+                <div class="number" id="minutes">00</div>
+                <div class="label">Minutos</div>
+            </div>
+            <div class="time-segment">
+                <div class="number" id="seconds">00</div>
+                <div class="label">Segundos</div>
+            </div>
+        </div>
+
+        <a href="https://www.bible.com/pt-BR" target="_blank" class="bible-btn">
+            <i class="fas fa-book-bible"></i> Ler Bíblia Online
+        </a>
+
+        <div class="launch-info">
+            ✨ Em breve lançará em 2026
+        </div>
+
+        <!-- Botões de Login / Cadastro -->
+        <div class="auth-buttons">
+            <button class="auth-btn login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="auth-btn register-btn">
+                <i class="fas fa-user-plus"></i> Cadastrar
+            </button>
+            <button class="auth-btn registered-btn">
+                <i class="fas fa-check-circle"></i> Já sou cadastrado
+            </button>
+        </div>
+
+        <button class="video-soon-btn">
+            <i class="fas fa-video"></i> Vídeo em Breve
+        </button>
+    </main>
+
+    <!-- Seção de Chat -->
+    <div class="chat-section">
+        <h3><i class="fas fa-comments"></i> Chat Comunitário</h3>
+        <div id="chatBox">
+            <div><strong>Sistema:</strong> Bem-vindo ao chat espiritual! 🙏</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="100">
+            <button class="send-btn" id="sendChatBtn">Enviar</button>
+        </div>
+        <div class="chat-footer">
+            Seja respeitoso. Este é um espaço de fé e comunhão.
+        </div>
     </div>
-  </div>
 
-  <script>
-    function nowBrasilia() {
-      return new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
-    }
+    <script>
+        // Atualiza data e dia da semana
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('pt-BR', options);
+            document.getElementById('currentWeekday').textContent = now.toLocaleDateString('pt-BR', { weekday: 'long' }).charAt(0).toUpperCase() + now.toLocaleDateString('pt-BR', { weekday: 'long' }).slice(1);
+        }
+        updateDate();
+        setInterval(updateDate, 60000);
 
-    const now = nowBrasilia();
-    const today = new Date(now);
-    today.setHours(14, 30, 0, 0); // 14:30
+        // 🔥 CONTAGEM REGRESSIVA PARA 1º DE JANEIRO DE 2026 🔥
+        function updateCountdown() {
+            const targetDate = new Date("January 1, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-    let target = today;
-    if (now > today) {
-      target.setDate(today.getDate() + 1);
-    }
+            if (distance < 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
 
-    const targetTime = target.getTime();
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const options = { 
-      weekday: 'long', 
-      day: 'numeric', 
-      month: 'long', 
-      hour: '2-digit', 
-      minute: '2-digit',
-      timeZone: 'America/Sao_Paulo'
-    };
-    document.getElementById('return-date-time').textContent = 
-      target.toLocaleString('pt-BR', options).replace('às', 'às');
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+        }
 
-    const h = document.getElementById('hours');
-    const m = document.getElementById('minutes');
-    const s = document.getElementById('seconds');
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
 
-    function update() {
-      const nowMs = nowBrasilia().getTime();
-      const diff = targetTime - nowMs;
+        // Chat
+        const chatInput = document.getElementById('chatInput');
+        const sendChatBtn = document.getElementById('sendChatBtn');
+        const chatBox = document.getElementById('chatBox');
 
-      if (diff <= 0) {
-        document.querySelector('.countdown').innerHTML = '<span style="color:#4caf50;">Manutenção concluída! Atualize a página.</span>';
-        clearInterval(timer);
-        return;
-      }
+        sendChatBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
 
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const seconds = Math.floor((diff % 60000) / 1000);
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
 
-      h.textContent = String(hours).padStart(2, '0');
-      m.textContent = String(minutes).padStart(2, '0');
-      s.textContent = String(seconds).padStart(2, '0');
-    }
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = `<strong>Você:</strong> ${message}`;
+            chatBox.appendChild(messageDiv);
 
-    update();
-    const timer = setInterval(update, 1000);
-  </script>
+            chatInput.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                const replyDiv = document.createElement('div');
+                replyDiv.innerHTML = `<strong>Sistema:</strong> Que Deus te abençoe! 🙏`;
+                chatBox.appendChild(replyDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        // Ações dos botões de autenticação
+        document.querySelectorAll('.auth-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const text = this.textContent.trim();
+                alert(`Você clicou em: "${text}"\n\nEm breve, isso levará você à página correspondente.`);
+            });
+        });
+    </script>
+
 </body>
 </html>
