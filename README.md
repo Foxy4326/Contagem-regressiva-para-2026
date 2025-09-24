@@ -11,7 +11,6 @@
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     body {
       background: linear-gradient(135deg, #1a2a6c, #2c3e50, #1a2a6c);
       color: white;
@@ -22,7 +21,6 @@
       text-align: center;
       padding: 20px;
     }
-
     .container {
       max-width: 600px;
       background: rgba(0, 0, 0, 0.75);
@@ -30,26 +28,22 @@
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
-
     h1 {
       font-size: 2.5rem;
       margin-bottom: 20px;
       color: #4fc3f7;
     }
-
     p.subtitle {
       font-size: 1.2rem;
       margin-bottom: 25px;
       line-height: 1.6;
     }
-
     .countdown {
       font-size: 1.8rem;
       font-weight: bold;
       margin: 25px 0;
       color: #66ffcc;
     }
-
     .countdown span {
       display: inline-block;
       min-width: 60px;
@@ -58,16 +52,13 @@
       border-radius: 8px;
       margin: 0 5px;
     }
-
     .menu {
       list-style: none;
       margin: 30px 0;
     }
-
     .menu li {
       margin: 15px 0;
     }
-
     .menu a {
       color: #66ffcc;
       text-decoration: none;
@@ -78,41 +69,22 @@
       border-radius: 8px;
       transition: all 0.3s ease;
     }
-
     .menu a:hover {
       background-color: #66ffcc;
       color: #000;
       transform: translateY(-2px);
     }
-
     .footer {
       margin-top: 30px;
       font-size: 0.95rem;
       color: #bbb;
     }
-
     @media (max-width: 600px) {
-      .container {
-        padding: 25px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .countdown {
-        font-size: 1.4rem;
-      }
-
-      .countdown span {
-        min-width: 45px;
-        font-size: 1rem;
-      }
-
-      .menu a {
-        font-size: 1rem;
-        padding: 8px 16px;
-      }
+      .container { padding: 25px; }
+      h1 { font-size: 2rem; }
+      .countdown { font-size: 1.4rem; }
+      .countdown span { min-width: 45px; font-size: 1rem; }
+      .menu a { font-size: 1rem; padding: 8px 16px; }
     }
   </style>
 </head>
@@ -141,25 +113,21 @@
   </div>
 
   <script>
-    // Função para obter data/hora atual no fuso de Brasília
     function nowBrasilia() {
       return new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
     }
 
-    // Obter data de hoje em Brasília
     const now = nowBrasilia();
     const today = new Date(now);
-    today.setHours(14, 30, 0, 0); // 14:30:00 (2:30 da tarde)
+    today.setHours(14, 30, 0, 0); // 14:30
 
-    // Se já passou das 14:30 hoje, define para amanhã
     let target = today;
     if (now > today) {
-      target.setDate(today.getDate() + 1); // amanhã às 14:30
+      target.setDate(today.getDate() + 1);
     }
 
     const targetTime = target.getTime();
 
-    // Formatar data de retorno para exibição amigável
     const options = { 
       weekday: 'long', 
       day: 'numeric', 
@@ -171,12 +139,11 @@
     document.getElementById('return-date-time').textContent = 
       target.toLocaleString('pt-BR', options).replace('às', 'às');
 
-    // Elementos do contador
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
+    const h = document.getElementById('hours');
+    const m = document.getElementById('minutes');
+    const s = document.getElementById('seconds');
 
-    function updateCountdown() {
+    function update() {
       const nowMs = nowBrasilia().getTime();
       const diff = targetTime - nowMs;
 
@@ -186,17 +153,17 @@
         return;
       }
 
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
 
-      hoursEl.textContent = String(hours).padStart(2, '0');
-      minutesEl.textContent = String(minutes).padStart(2, '0');
-      secondsEl.textContent = String(seconds).padStart(2, '0');
+      h.textContent = String(hours).padStart(2, '0');
+      m.textContent = String(minutes).padStart(2, '0');
+      s.textContent = String(seconds).padStart(2, '0');
     }
 
-    updateCountdown();
-    const timer = setInterval(updateCountdown, 1000);
+    update();
+    const timer = setInterval(update, 1000);
   </script>
 </body>
 </html>
