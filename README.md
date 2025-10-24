@@ -62,14 +62,6 @@ body.light #spiritualChatBox { background: rgba(200,200,200,0.3); color:#1a1a2e;
 body.light #spiritualChatInput { background: rgba(0,0,0,0.05); color:#1a1a2e; }
 .send-btn { padding:0.7rem 1.2rem; background:#4B0082; color:white; border:none; border-radius:50px; cursor:pointer; }
 
-/* MODAIS SIMPLES */
-.auth-modal-overlay, .novidades-overlay { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center; z-index:2000; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
-.auth-modal-overlay.active, .novidades-overlay.ativo { opacity:1; pointer-events:all; }
-.auth-modal, .novidades-content { background: linear-gradient(135deg,#1a1a2e,#16213e); padding:2rem; border-radius:20px; width:90%; max-width:450px; border:2px solid #FFD700; color:white; }
-body.light .auth-modal, body.light .novidades-content { background:#fff9f0; border:2px solid #DAA520; color:#1a1a2e; }
-.fechar-novidades { position:absolute; top:15px; right:15px; background:#8B0000; color:white; width:32px; height:32px; border:none; border-radius:50%; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-.fechar-novidades:hover { background:#a52a2a; transform:scale(1.1); }
-
 /* ELEMENTOS FLUTUANTES */
 .spiritual-element { position:fixed; font-size:1.8rem; opacity:0.7; z-index:-1; pointer-events:none; animation:float 15s infinite ease-in-out; }
 @keyframes float {0%,100%{transform:translateY(0px) rotate(0deg);}25%{transform:translateY(-20px) rotate(2deg);}50%{transform:translateY(-10px) rotate(-2deg);}75%{transform:translateY(-25px) rotate(1deg);}}
@@ -93,10 +85,6 @@ body.light #calendar th { background:#DAA520; color:#1a1a2e; }
 #calendar td:hover { background:rgba(255,215,0,0.3); border-radius:50%; }
 body.light #calendar td:hover { background:rgba(218,165,32,0.3); }
 
-/* RODAPÉ */
-footer { margin:2rem 0; font-size:0.85rem; color:#FFD700; }
-body.light footer { color:#DAA520; }
-
 @media(max-width:500px){ .auth-top-bar{display:none;} .number-weeks,.number{font-size:1.8rem;} h1{font-size:2rem;} .btn{padding:0.7rem 1.4rem; font-size:1rem;} }
 </style>
 </head>
@@ -104,8 +92,8 @@ body.light footer { color:#DAA520; }
 
 <!-- MENU AUTENTICAÇÃO -->
 <div class="auth-top-bar">
-    <button class="auth-top-btn login-btn" onclick="openModal('login')"><i class="fas fa-user"></i> Login</button>
-    <button class="auth-top-btn signup-btn" onclick="openModal('signup')"><i class="fas fa-user-plus"></i> Cadastrar</button>
+    <button class="auth-top-btn login-btn">Login</button>
+    <button class="auth-top-btn signup-btn">Cadastrar</button>
 </div>
 
 <div class="top-bar">
@@ -118,18 +106,16 @@ body.light footer { color:#DAA520; }
 
 <main>
 <h1>⏳ Contagem Regressiva para 2026</h1>
-
 <div class="container">
-<div class="time-segment-weeks"><div class="number-weeks" id="weeks-display">000</div><div class="label-weeks">Semanas</div></div>
-<div class="time-segment"><div class="number" id="days">000</div><div class="label">Dias</div></div>
-<div class="time-segment"><div class="number" id="hours">00</div><div class="label">Horas</div></div>
-<div class="time-segment"><div class="number" id="minutes">00</div><div class="label">Minutos</div></div>
-<div class="time-segment"><div class="number" id="seconds">00</div><div class="label">Segundos</div></div>
+    <div class="time-segment-weeks"><div class="number-weeks" id="weeks-display">000</div><div class="label-weeks">Semanas</div></div>
+    <div class="time-segment"><div class="number" id="days">000</div><div class="label">Dias</div></div>
+    <div class="time-segment"><div class="number" id="hours">00</div><div class="label">Horas</div></div>
+    <div class="time-segment"><div class="number" id="minutes">00</div><div class="label">Minutos</div></div>
+    <div class="time-segment"><div class="number" id="seconds">00</div><div class="label">Segundos</div></div>
 </div>
 
-<a href="https://youtube.com/@bibliasagrada-r3c4o?si=rcpyTgzjQt9DRdUL" target="_blank" class="btn connect-button"><i class="fab fa-youtube"></i> Conecte-se à Palavra: Visite nosso Canal</a>
+<a href="https://www.youtube.com" target="_blank" class="btn connect-button"><i class="fab fa-youtube"></i> Visite nosso Canal</a>
 
-<!-- CHAT IA -->
 <div class="chat-section">
 <h3>💬 Comentários com IA Espiritual</h3>
 <div id="spiritualChatBox"></div>
@@ -140,7 +126,6 @@ body.light footer { color:#DAA520; }
 </div>
 </div>
 
-<!-- CALENDÁRIO -->
 <div id="calendar">
 <div style="display:flex; justify-content:space-between; padding:8px; background:#0d1b2a; color:#FFD700;">
 <span class="nav-btn" id="prev-month">&#8592;</span>
@@ -154,21 +139,18 @@ body.light footer { color:#DAA520; }
 </div>
 </main>
 
-<!-- BOTÃO TEMA -->
 <button id="themeToggle">🌙</button>
-
-<!-- PLAY PROTECT -->
 <div id="playProtect"><i class="fas fa-shield-alt"></i> Verificando site...</div>
 
 <script>
-// === TEMA ===
+// ===== TEMA =====
 const themeToggle=document.getElementById('themeToggle');
 function updateTheme(mode){ document.body.className=mode; themeToggle.textContent=mode==='dark'?'🌙':'☀️'; }
 let savedTheme=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
 updateTheme(savedTheme);
 themeToggle.addEventListener('click',()=>{ const newTheme=document.body.classList.contains('dark')?'light':'dark'; updateTheme(newTheme); localStorage.setItem('theme',newTheme); });
 
-// === PLAY PROTECT ===
+// ===== PLAY PROTECT =====
 function sitePlayProtect(){
   const banner=document.getElementById('playProtect'); banner.style.display='block';
   setTimeout(()=>{ const ok=document.getElementById('days')&&typeof Date.now==='function';
@@ -177,7 +159,7 @@ function sitePlayProtect(){
   },1500);
 }
 
-// === DATA ===
+// ===== DATA =====
 function updateCurrentDate(){
   const now=new Date();
   const optsW={weekday:'long',timeZone:'America/Sao_Paulo'};
@@ -186,7 +168,7 @@ function updateCurrentDate(){
   document.getElementById('full-date').textContent=now.toLocaleDateString('pt-BR',optsD).replace(/^\w/,c=>c.toUpperCase());
 }
 
-// === CONTAGEM REGRESSIVA ===
+// ===== CONTAGEM REGRESSIVA =====
 function updateCountdown(){
   const target=Date.UTC(2026,0,1,0,0,0); const now=Date.now(); const diff=Math.max(0,target-now);
   const seconds=Math.floor(diff/1000)%60;
@@ -201,7 +183,7 @@ function updateCountdown(){
   document.getElementById('weeks-display').textContent=weeks;
 }
 
-// === CHAT SIMPLES ===
+// ===== CHAT =====
 const spiritualChatBox=document.getElementById('spiritualChatBox');
 function sendSpiritualMessage(){ const input=document.getElementById('spiritualChatInput'); if(input.value.trim()==='')return;
   const userMsg=input.value.trim();
@@ -213,7 +195,7 @@ function sendSpiritualMessage(){ const input=document.getElementById('spiritualC
 }
 function clearSpiritualChat(){spiritualChatBox.innerHTML='';}
 
-// === CALENDÁRIO ===
+// ===== CALENDÁRIO =====
 const calMonthYear=document.getElementById('month-year');
 const calBody=document.getElementById('calendar-body');
 let todayCal=new Date(); let currentMonthCal=todayCal.getMonth(); let currentYearCal=todayCal.getFullYear();
@@ -244,16 +226,20 @@ function renderCalendar(month,year){
 document.getElementById('prev-month').addEventListener('click',()=>{ currentMonthCal--; if(currentMonthCal<0){currentMonthCal=11; currentYearCal--;} renderCalendar(currentMonthCal,currentYearCal); });
 document.getElementById('next-month').addEventListener('click',()=>{ currentMonthCal++; if(currentMonthCal>11){currentMonthCal=0; currentYearCal++;} renderCalendar(currentMonthCal,currentYearCal); });
 
-// === ELEMENTOS FLUTUANTES ===
-for(let i=0;i<15;i++){ const el=document.createElement('div'); el.className='spiritual-element'; el.innerHTML='✝️';
-  el.style.top=Math.random()*90+'vh'; el.style.left=Math.random()*95+'vw'; el.style.fontSize=(12+Math.random()*36)+'px'; el.style.opacity=0.3+Math.random()*0.5; document.body.appendChild(el);
+// ===== ELEMENTOS FLUTUANTES =====
+function spawnSpiritualElements(){
+  const icons=['📖','✝️','🕊️','🙏','💫']; for(let i=0;i<15;i++){
+    const el=document.createElement('div'); el.className='spiritual-element'; el.textContent=icons[Math.floor(Math.random()*icons.length)];
+    el.style.top=Math.random()*90+'%'; el.style.left=Math.random()*90+'%'; el.style.fontSize=(20+Math.random()*30)+'px'; document.body.appendChild(el);
+  }
 }
 
-// === INICIALIZAÇÃO ===
-updateCurrentDate(); setInterval(updateCurrentDate,60000);
+// ===== LOOP PRINCIPAL =====
+updateCurrentDate(); setInterval(updateCurrentDate,1000);
 updateCountdown(); setInterval(updateCountdown,1000);
 renderCalendar(currentMonthCal,currentYearCal);
-window.onload=sitePlayProtect;
+spawnSpiritualElements();
+sitePlayProtect();
 </script>
 </body>
 </html>
