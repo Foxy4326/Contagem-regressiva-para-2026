@@ -81,17 +81,21 @@ body.light #playProtect { background:#DAA520; color:#1a1a2e; border:1px solid #D
 /* BOTÃO TEMA */
 #themeToggle { position:fixed; bottom:20px; right:20px; padding:0.7rem 1.2rem; border:none; border-radius:50px; font-weight:bold; cursor:pointer; z-index:1000; background:#FFD700; color:#1a1a2e; box-shadow:0 4px 10px rgba(0,0,0,0.3); }
 
+/* CALENDÁRIO */
+#calendar { margin-top:2rem; max-width:400px; border:2px solid #FFD700; border-radius:12px; overflow:hidden; }
+#calendar table { width:100%; border-collapse:collapse; text-align:center; }
+#calendar th, #calendar td { padding:8px; }
+#calendar th { background:#0d1b2a; color:#FFD700; }
+body.light #calendar th { background:#DAA520; color:#1a1a2e; }
+#calendar td { height:40px; }
+#calendar .nav-btn { cursor:pointer; font-weight:bold; }
+#calendar td { transition:0.3s; }
+#calendar td:hover { background:rgba(255,215,0,0.3); border-radius:50%; }
+body.light #calendar td:hover { background:rgba(218,165,32,0.3); }
+
 /* RODAPÉ */
 footer { margin:2rem 0; font-size:0.85rem; color:#FFD700; }
 body.light footer { color:#DAA520; }
-
-/* CALENDÁRIO */
-#calendar-container { max-width:350px;margin:2rem auto;font-family:'Segoe UI',sans-serif; }
-#calendar-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem; }
-#calendar-header button { padding:0.3rem 0.6rem;border-radius:6px;border:none;background:#4B0082;color:white;cursor:pointer; }
-#calendar th, #calendar td { padding:8px; border:1px solid rgba(255,215,0,0.2); border-radius:6px; transition:background 0.5s,color 0.5s; }
-#calendar th { color:#FFD700; }
-body.light #calendar th, body.light #calendar td { border:1px solid #DAA520; color:#1a1a2e; }
 
 @media(max-width:500px){ .auth-top-bar{display:none;} .number-weeks,.number{font-size:1.8rem;} h1{font-size:2rem;} .btn{padding:0.7rem 1.4rem; font-size:1rem;} }
 </style>
@@ -104,7 +108,6 @@ body.light #calendar th, body.light #calendar td { border:1px solid #DAA520; col
     <button class="auth-top-btn signup-btn" onclick="openModal('signup')"><i class="fas fa-user-plus"></i> Cadastrar</button>
 </div>
 
-<!-- TOP BAR -->
 <div class="top-bar">
     <div class="logo"><i class="fas fa-bible"></i> Bíblia Sagrada</div>
     <div class="date-display">
@@ -124,28 +127,7 @@ body.light #calendar th, body.light #calendar td { border:1px solid #DAA520; col
 <div class="time-segment"><div class="number" id="seconds">00</div><div class="label">Segundos</div></div>
 </div>
 
-<!-- BOTÕES -->
 <a href="https://youtube.com/@bibliasagrada-r3c4o?si=rcpyTgzjQt9DRdUL" target="_blank" class="btn connect-button"><i class="fab fa-youtube"></i> Conecte-se à Palavra: Visite nosso Canal</a>
-<a href="#" class="btn coming-soon-btn" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;"><i class="fas fa-calendar-star"></i> Ano em Breve: 2026 ✨</a>
-<a href="#" class="btn video-soon-btn" onclick="alert('🔔 Novo vídeo em breve! Inscreva-se no canal para não perder.'); return false;"><i class="fas fa-video"></i> Vídeo Lançado em Breve! 🎬</a>
-<a href="https://www.bibliaonline.com.br/" target="_blank" class="btn bible-read-btn"><i class="fas fa-book-open"></i> Ler a Bíblia Online 📖</a>
-
-<!-- CALENDÁRIO -->
-<div id="calendar-container">
-  <div id="calendar-header">
-    <button id="prev-month">◀</button>
-    <h3 id="month-year"></h3>
-    <button id="next-month">▶</button>
-  </div>
-  <table id="calendar">
-    <thead>
-      <tr>
-        <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
-      </tr>
-    </thead>
-    <tbody id="calendar-body"></tbody>
-  </table>
-</div>
 
 <!-- CHAT IA -->
 <div class="chat-section">
@@ -157,78 +139,39 @@ body.light #calendar th, body.light #calendar td { border:1px solid #DAA520; col
 <button class="send-btn" onclick="clearSpiritualChat()">Limpar Chat</button>
 </div>
 </div>
+
+<!-- CALENDÁRIO -->
+<div id="calendar">
+<div style="display:flex; justify-content:space-between; padding:8px; background:#0d1b2a; color:#FFD700;">
+<span class="nav-btn" id="prev-month">&#8592;</span>
+<span id="month-year">Mês Ano</span>
+<span class="nav-btn" id="next-month">&#8594;</span>
+</div>
+<table>
+<thead><tr><th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th></tr></thead>
+<tbody id="calendar-body"></tbody>
+</table>
+</div>
 </main>
-
-<!-- MODAIS LOGIN/CADASTRO -->
-<div class="auth-modal-overlay" id="loginModal">
-<div class="auth-modal">
-<h3><i class="fas fa-sign-in-alt"></i> Faça seu Login</h3>
-<form class="auth-form" onsubmit="handleAuth(event,'login')">
-<input type="email" placeholder="E-mail" required />
-<input type="password" placeholder="Senha" required />
-<div class="auth-actions">
-<button type="button" class="auth-btn-modal cancel" onclick="closeAuthModal()">Cancelar</button>
-<button type="submit" class="auth-btn-modal submit">Entrar</button>
-</div>
-</form>
-</div>
-</div>
-<div class="auth-modal-overlay" id="signupModal">
-<div class="auth-modal">
-<h3><i class="fas fa-user-plus"></i> Crie sua Conta</h3>
-<form class="auth-form" onsubmit="handleAuth(event,'signup')">
-<input type="text" placeholder="Nome completo" required />
-<input type="email" placeholder="E-mail" required />
-<input type="password" placeholder="Senha" required />
-<div class="auth-actions">
-<button type="button" class="auth-btn-modal cancel" onclick="closeAuthModal()">Cancelar</button>
-<button type="submit" class="auth-btn-modal submit">Cadastrar</button>
-</div>
-</form>
-</div>
-</div>
-
-<!-- NOVIDADES -->
-<div id="novidadesModal" class="novidades-overlay">
-<div class="novidades-content">
-<button class="fechar-novidades" onclick="fecharNovidades()">✕</button>
-<h2>✨ Novidades e Atualizações</h2>
-<ul class="novidades-lista">
-<li><strong>✅ Correção:</strong> Contagem regressiva para 2026 agora funciona em todos os navegadores!</li>
-<li><strong>🌟 Novo:</strong> Chat com IA Espiritual responde com versículos bíblicos</li>
-<li><strong>🕊️ Novo:</strong> Anjos e símbolos de Jesus flutuando suavemente na tela</li>
-<li><strong>🔒 Novo:</strong> Sistema "Site Play Protect" verifica integridade ao carregar</li>
-<li><strong>📱 Melhoria:</strong> Design totalmente responsivo para celular e tablet</li>
-<li><strong>🎥 Atualizado:</strong> Botão direto para seu canal do YouTube</li>
-</ul>
-<p style="font-size:0.9rem;color:#aaa;margin-top:1.2rem;">Que Deus abençoe seu caminho até 2026! 🙏</p>
-</div>
-</div>
 
 <!-- BOTÃO TEMA -->
 <button id="themeToggle">🌙</button>
-
-<!-- RODAPÉ -->
-<footer>© 2025 Tysi</footer>
 
 <!-- PLAY PROTECT -->
 <div id="playProtect"><i class="fas fa-shield-alt"></i> Verificando site...</div>
 
 <script>
 // === TEMA ===
-const themeToggle = document.getElementById('themeToggle');
-function updateTheme(mode) {
-  document.body.className = mode;
-  themeToggle.textContent = mode==='dark'?'🌙':'☀️';
-}
-let savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+const themeToggle=document.getElementById('themeToggle');
+function updateTheme(mode){ document.body.className=mode; themeToggle.textContent=mode==='dark'?'🌙':'☀️'; }
+let savedTheme=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
 updateTheme(savedTheme);
-themeToggle.addEventListener('click',()=>{ const newTheme = document.body.classList.contains('dark')?'light':'dark'; updateTheme(newTheme); localStorage.setItem('theme', newTheme); });
+themeToggle.addEventListener('click',()=>{ const newTheme=document.body.classList.contains('dark')?'light':'dark'; updateTheme(newTheme); localStorage.setItem('theme',newTheme); });
 
 // === PLAY PROTECT ===
 function sitePlayProtect(){
   const banner=document.getElementById('playProtect'); banner.style.display='block';
-  setTimeout(()=>{ const ok = document.getElementById('days') && typeof Date.now==='function';
+  setTimeout(()=>{ const ok=document.getElementById('days')&&typeof Date.now==='function';
     if(ok){banner.innerHTML='<i class="fas fa-check-circle"></i> Site verificado e seguro! ✝️'; banner.style.background='rgba(0,100,0,0.8)'; setTimeout(()=>{banner.style.opacity='0'; setTimeout(()=>{banner.style.display='none';},1000);},2000);}
     else{banner.innerHTML='<i class="fas fa-exclamation-triangle"></i> Erro. Recarregue.'; banner.style.background='rgba(139,0,0,0.9)';}
   },1500);
@@ -245,9 +188,7 @@ function updateCurrentDate(){
 
 // === CONTAGEM REGRESSIVA ===
 function updateCountdown(){
-  const target=Date.UTC(2026,0,1,0,0,0);
-  const now=Date.now();
-  const diff=Math.max(0,target-now);
+  const target=Date.UTC(2026,0,1,0,0,0); const now=Date.now(); const diff=Math.max(0,target-now);
   const seconds=Math.floor(diff/1000)%60;
   const minutes=Math.floor(diff/1000/60)%60;
   const hours=Math.floor(diff/1000/60/60)%24;
@@ -262,9 +203,7 @@ function updateCountdown(){
 
 // === CHAT SIMPLES ===
 const spiritualChatBox=document.getElementById('spiritualChatBox');
-function sendSpiritualMessage(){
-  const input=document.getElementById('spiritualChatInput');
-  if(input.value.trim()==='')return;
+function sendSpiritualMessage(){ const input=document.getElementById('spiritualChatInput'); if(input.value.trim()==='')return;
   const userMsg=input.value.trim();
   const botReply=`💡 Resposta Bíblica: "${userMsg} – Confie e tenha fé, tudo é possível com Deus!"`;
   const pUser=document.createElement('p'); pUser.textContent='Você: '+userMsg;
@@ -274,39 +213,26 @@ function sendSpiritualMessage(){
 }
 function clearSpiritualChat(){spiritualChatBox.innerHTML='';}
 
-// === MODAIS ===
-function openModal(type){document.getElementById(type+'Modal').classList.add('active');}
-function closeAuthModal(){document.querySelectorAll('.auth-modal-overlay').forEach(e=>e.classList.remove('active'));}
-function handleAuth(e,type){e.preventDefault(); alert('✅ '+(type==='login'?'Login realizado!':'Cadastro realizado!')); closeAuthModal();}
-function fecharNovidades(){document.getElementById('novidadesModal').classList.remove('ativo');}
-
-// === ELEMENTOS FLUTUANTES ===
-for(let i=0;i<15;i++){ const el=document.createElement('div'); el.className='spiritual-element'; el.innerHTML='✝️';
-  el.style.top=Math.random()*90+'vh'; el.style.left=Math.random()*95+'vw'; el.style.fontSize=(12+Math.random()*36)+'px'; el.style.opacity=0.3+Math.random()*0.5; document.body.appendChild(el); }
-
 // === CALENDÁRIO ===
-const calMonthYear = document.getElementById('month-year');
-const calBody = document.getElementById('calendar-body');
-let todayCal = new Date();
-let currentMonthCal = todayCal.getMonth();
-let currentYearCal = todayCal.getFullYear();
-function renderCalendar(month, year){
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  calMonthYear.textContent = months[month] + ' ' + year;
-  calBody.innerHTML = '';
-  let date = 1;
+const calMonthYear=document.getElementById('month-year');
+const calBody=document.getElementById('calendar-body');
+let todayCal=new Date(); let currentMonthCal=todayCal.getMonth(); let currentYearCal=todayCal.getFullYear();
+function renderCalendar(month,year){
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const months=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  calMonthYear.textContent=months[month]+' '+year; calBody.innerHTML='';
+  let date=1;
   for(let i=0;i<6;i++){
-    let row = document.createElement('tr');
+    let row=document.createElement('tr');
     for(let j=0;j<7;j++){
-      let cell = document.createElement('td');
-      if(i===0 && j<firstDay){ cell.textContent = ''; }
-      else if(date>daysInMonth){ cell.textContent = ''; }
-      else {
-        cell.textContent = date;
+      let cell=document.createElement('td');
+      if(i===0 && j<firstDay){ cell.textContent=''; }
+      else if(date>daysInMonth){ cell.textContent=''; }
+      else{
+        cell.textContent=date;
         if(date===todayCal.getDate() && month===todayCal.getMonth() && year===todayCal.getFullYear()){
-          cell.style.background = '#FFD700'; cell.style.color = '#1a1a2e'; cell.style.fontWeight='bold';
+          cell.style.background='#FFD700'; cell.style.color='#1a1a2e'; cell.style.fontWeight='bold';
         }
         date++;
       }
@@ -315,17 +241,19 @@ function renderCalendar(month, year){
     calBody.appendChild(row);
   }
 }
-document.getElementById('prev-month').addEventListener('click',()=>{ currentMonthCal--; if(currentMonthCal<0){currentMonthCal=11;currentYearCal--;} renderCalendar(currentMonthCal,currentYearCal); });
-document.getElementById('next-month').addEventListener('click',()=>{ currentMonthCal++; if(currentMonthCal>11){currentMonthCal=0;currentYearCal++;} renderCalendar(currentMonthCal,currentYearCal); });
-const observerTheme = new MutationObserver(()=>renderCalendar(currentMonthCal,currentYearCal));
-observerTheme.observe(document.body,{attributes:true,class:true});
+document.getElementById('prev-month').addEventListener('click',()=>{ currentMonthCal--; if(currentMonthCal<0){currentMonthCal=11; currentYearCal--;} renderCalendar(currentMonthCal,currentYearCal); });
+document.getElementById('next-month').addEventListener('click',()=>{ currentMonthCal++; if(currentMonthCal>11){currentMonthCal=0; currentYearCal++;} renderCalendar(currentMonthCal,currentYearCal); });
+
+// === ELEMENTOS FLUTUANTES ===
+for(let i=0;i<15;i++){ const el=document.createElement('div'); el.className='spiritual-element'; el.innerHTML='✝️';
+  el.style.top=Math.random()*90+'vh'; el.style.left=Math.random()*95+'vw'; el.style.fontSize=(12+Math.random()*36)+'px'; el.style.opacity=0.3+Math.random()*0.5; document.body.appendChild(el);
+}
 
 // === INICIALIZAÇÃO ===
 updateCurrentDate(); setInterval(updateCurrentDate,60000);
 updateCountdown(); setInterval(updateCountdown,1000);
 renderCalendar(currentMonthCal,currentYearCal);
 window.onload=sitePlayProtect;
-setTimeout(()=>{document.getElementById('novidadesModal').classList.add('ativo');},2000);
 </script>
 </body>
 </html>
